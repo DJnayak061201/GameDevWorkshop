@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     public Camera cam;
+    public LayerMask EnemyLayer;
     // Update is called once per frame
     void Update()
     {
@@ -12,11 +13,11 @@ public class Shoot : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             
-            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 100f, EnemyLayer))
             {
                 if (hit.collider.tag == "enemy")
                 {
-                    Destroy(hit.collider.gameObject);
+                    hit.collider.gameObject.GetComponent<EnemyController>().TakeDamage(20, hit.point);
                 }
             }
         }
